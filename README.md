@@ -1,286 +1,183 @@
-# Segmentação de clientes de supermercado
+# Segmentação de clientes de supermercado com IA
 
-Repositório do projeto: [dev-abraao/IAmarcos](https://github.com/dev-abraao/IAmarcos).
+[![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dev-abraao/IAmarcos/blob/main/segmentacao_clientes.ipynb)
 
-Projeto acadêmico de Inteligência Artificial para comparar **K-Means, agrupamento hierárquico aglomerativo e DBSCAN** na identificação de perfis de gastos de clientes. O notebook é autocontido, executável no Google Colab e também em Jupyter local.
 
-O notebook contém as análises, a implementação e avaliação dos modelos, os perfis dos segmentos, as propostas comerciais e a exportação. A primeira célula executa a preparação necessária (dependências, configurações e carregamento da base) sem seções explicativas. A apresentação da pesquisa e as instruções de execução ficam neste README.
+ [Pesquisa acadêmica de Inteligência Artificial](https://www.overleaf.com/project/6af5108043d52d3928a81eae/share#bfdf8c66d86b8e6522707e9634931ae63501cb73fcbad276) que compara **K-Means, agrupamento hierárquico aglomerativo e DBSCAN** para identificar perfis de clientes a partir de seus gastos em hortifruti, carnes e laticínios. O objetivo é produzir segmentos interpretáveis e propor campanhas por categoria para um supermercado.
 
 **Autores:** Abraão Sousa de Andrade e Arthur Scortegagna de Almeida  
 **Curso:** Ciência da Computação  
 **Instituição:** Centro Universitário de Maceió — UNIMA AFYA  
 **Local:** Maceió, Alagoas  
-**E-mails:** abraao_andrade_sousa@hotmail.com e arthurscortegagna@gmail.com
+**Contato:** abraao_andrade_sousa@hotmail.com · arthurscortegagna@gmail.com
 
-## Pergunta de pesquisa e aplicação
+## Pergunta de pesquisa
 
 > Em que medida modelos de agrupamento identificam segmentos de clientes com padrões de gastos distintos, capazes de orientar propostas de campanhas por categoria em um supermercado?
 
-O resultado esperado é uma descrição dos segmentos encontrados, acompanhada de sugestões de campanhas para teste. Por exemplo, um grupo que concentra uma parcela relativamente maior dos gastos em hortifruti pode receber uma proposta de comunicação dessa categoria. Os perfis são identificados pelos experimentos, sem nomes ou quantidades de segmentos definidos previamente.
+O estudo é exploratório e utiliza aprendizado não supervisionado: os clientes não possuem segmentos previamente definidos. Comparamos os grupos encontrados quanto à separação, cobertura e estabilidade. Depois, descrevemos seus padrões de compra e formulamos propostas comerciais para teste.
 
-O trabalho demonstra preparação de dados, aprendizado não supervisionado, avaliação de estabilidade, visualização e comunicação de resultados comerciais. Não mede resposta a ofertas, aumento de vendas, lucratividade ou previsão de demanda futura.
-
-O relatório anterior já explorou a base. Por isso, este estudo é exploratório: eventuais expectativas sobre os grupos não são hipóteses confirmatórias independentes.
-
-## Arquivos
+## Estrutura do repositório
 
 ```text
-segmentacao-supermercado/
-├── segmentacao_clientes.ipynb    # Código, explicações e resultados executados
-├── README.md                    # Documentação do projeto e dos algoritmos
-├── requirements.txt             # Versões do ambiente analítico de referência
-├── .gitignore
-├── dados/
-│   └── p45b.xlsx                 # Cópia da planilha fornecida
-├── artigo/
-│   ├── artigo.tex               # Artigo no formato IEEE
-│   ├── artigo.pdf               # Versão compilada
-│   └── figuras_artigo/          # Figuras utilizadas no artigo
-└── resultados/
-    ├── README.md                # Identificação da execução validada na entrega
-    ├── execucao_<data_hora>/
-    │   ├── configuracao.json
-    │   ├── requirements-execucao.txt
-    │   ├── resumo_resultados.md
-    │   ├── tabelas/
-    │   ├── figuras/              # PNG a 300 dpi e PDF
-    │   └── modelos/              # Modelos ajustados e transformações
-    └── execucao_<data_hora>.zip   # Exportação de cada execução
+IAmarcos/
+├── README.md
+├── segmentacao_clientes.ipynb
+└── p45b.xlsx
 ```
 
-As pastas `.tools/` e `.venv/`, quando presentes na cópia local, servem somente à geração e à validação da entrega. Estão ignoradas pelo Git e excluídas do ZIP do projeto.
+- [segmentacao_clientes.ipynb](segmentacao_clientes.ipynb): notebook com análises, implementação e avaliação dos modelos, perfis dos segmentos, propostas e exportação dos resultados.
+- [p45b.xlsx](p45b.xlsx): dataset utilizado nos experimentos.
 
-## Executar no Google Colab
+A preparação do ambiente e o carregamento dos dados são executados na primeira célula de código do notebook. As seções seguintes apresentam as análises e os modelos. As pastas e os ZIPs de resultados são criados durante a execução; não fazem parte da estrutura versionada acima.
 
-1. Acesse [Google Colab](https://colab.research.google.com/).
-2. Abra **Arquivo → Fazer upload de notebook** e selecione `segmentacao_clientes.ipynb`. Depois de publicar o repositório, também é possível abri-lo pela guia **GitHub** do Colab.
-3. Use uma sessão de CPU; este projeto não precisa de GPU.
-4. Execute as células em ordem, por **Ambiente de execução → Executar tudo**.
-5. Quando a célula de carregamento solicitar, envie `dados/p45b.xlsx`. Também é possível enviar a planilha pelo painel lateral antes de executar.
-6. Consulte as tabelas, os gráficos e as propostas comerciais no próprio notebook.
-7. Ao final, baixe o ZIP indicado na saída. Você pode usar o painel lateral ou definir `BAIXAR_ZIP_NO_COLAB = True` na configuração e executar novamente a última célula.
+## Como executar no Google Colab
 
-O notebook usa as bibliotecas disponíveis e instala somente dependências ausentes. Para solicitar as versões do ambiente de referência, altere `FIXAR_VERSOES = True` em uma sessão nova, antes das importações. Se já houver bibliotecas importadas com outras versões, reinicie a sessão depois da instalação e execute novamente. As versões realmente usadas são sempre exportadas.
+1. Baixe o arquivo [p45b.xlsx](p45b.xlsx) deste repositório. Na página do arquivo no GitHub, use a opção de baixar o arquivo original.
+2. Clique no botão **Abrir no Colab** no início deste README. Também é possível abrir o [notebook no GitHub](segmentacao_clientes.ipynb) e usar o botão do Colab que aparece nele.
+3. Use uma sessão com **CPU**. Não é necessário habilitar GPU.
+4. No Colab, escolha **Ambiente de execução → Executar tudo**.
+5. Quando aparecer **“Envie o arquivo p45b.xlsx”**, selecione a planilha baixada no primeiro passo. Mantenha esse nome de arquivo.
+6. Aguarde a execução das células e consulte as tabelas, os gráficos e as propostas comerciais no notebook.
+7. Ao final, baixe o ZIP de resultados pelo painel de arquivos à esquerda, no caminho informado pela última seção.
 
-O armazenamento da sessão do Colab é temporário: baixe os resultados antes de encerrá-la. [Informações oficiais sobre o Colab](https://research.google.com/colaboratory/faq.html).
+**Abrir o notebook pelo GitHub não envia a planilha para a sessão do Colab.** É necessário fazer o upload quando solicitado. Como alternativa, envie `p45b.xlsx` pelo painel de arquivos do Colab antes de executar as células; o notebook encontrará o arquivo automaticamente.
 
-## Executar localmente
+Se preferir enviar o próprio notebook, baixe `segmentacao_clientes.ipynb`, acesse [Google Colab](https://colab.research.google.com/) e abra **Arquivo → Fazer upload de notebook**. Depois, siga os mesmos passos de execução e envio do dataset.
 
-Use Python 3.12 para aproximar o ambiente de validação da entrega. Em um terminal na raiz do projeto:
+### Dependências e configurações
 
-```bash
-python -m venv .venv
-```
+O notebook usa as bibliotecas disponíveis na sessão e instala automaticamente as que estiverem ausentes. Não é necessário um arquivo `requirements.txt` para a execução no Colab. Entre as bibliotecas utilizadas estão NumPy, pandas, SciPy, scikit-learn, Matplotlib, Seaborn e openpyxl.
 
-Ative o ambiente no Windows PowerShell:
+As opções abaixo ficam na primeira célula de código:
+
+| Variável | Padrão | Função |
+| --- | --- | --- |
+| `ARQUIVO_DADOS` | `None` | Procura a planilha nos caminhos previstos ou solicita upload no Colab. Pode receber um caminho explícito. |
+| `FIXAR_VERSOES` | `False` | Usa as dependências já disponíveis. Com `True`, solicita as versões de referência definidas no código. |
+| `BAIXAR_ZIP_NO_COLAB` | `False` | Gera o ZIP sem iniciar o download. Com `True`, a última célula inicia o download automaticamente. |
+
+Para ativar o download automático, altere `BAIXAR_ZIP_NO_COLAB = True` antes de executar todas as células. Para usar `FIXAR_VERSOES = True`, prefira uma sessão nova; se houver bibliotecas já importadas com outras versões, reinicie a sessão após a instalação e execute novamente. As versões efetivamente utilizadas são registradas nos resultados.
+
+O armazenamento do Colab é temporário. Baixe os resultados antes de encerrar a sessão. Se ela for reiniciada, poderá ser necessário enviar a planilha novamente. [Informações oficiais sobre o Colab](https://research.google.com/colaboratory/faq.html).
+
+### Execução local opcional
+
+Também é possível executar em Jupyter local, mantendo a planilha e o notebook na mesma pasta. Recomenda-se Python 3.12 para aproximar o ambiente de referência.
+
+No Windows PowerShell, dentro da pasta do repositório:
 
 ```powershell
-.\.venv\Scripts\Activate.ps1
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install jupyterlab
+.\.venv\Scripts\python.exe -m jupyter lab segmentacao_clientes.ipynb
 ```
 
-Ou no Linux/macOS:
+Selecione o kernel do ambiente criado e execute as células em ordem. A primeira célula instala as dependências analíticas ausentes e encontra `p45b.xlsx` na pasta atual. A execução local gera os mesmos tipos de arquivos de saída.
 
-```bash
-source .venv/bin/activate
-```
+## Dataset
 
-Instale as dependências e abra o notebook:
+A planilha contém **81 clientes e sete variáveis originais**, sem valores ausentes ou identificadores repetidos na base utilizada. Segundo o relatório anterior da pesquisa, os gastos agregam três meses. A planilha não documenta a moeda, a estratégia de amostragem ou se os registros são reais ou sintéticos.
 
-```bash
-python -m pip install -r requirements.txt jupyterlab
-python -m jupyter lab segmentacao_clientes.ipynb
-```
-
-A planilha é procurada em `dados/p45b.xlsx`, `p45b.xlsx`, `../dados/p45b.xlsx` e `/content/p45b.xlsx`. Também é possível definir `ARQUIVO_DADOS` explicitamente. O programa não altera a planilha de entrada.
-
-## Dataset e preparação
-
-A base fornecida para a atividade tem **81 clientes e sete variáveis originais**. Segundo o relatório anterior, os gastos correspondem a um período agregado de três meses. A planilha não documenta datas individuais, moeda, método de amostragem nem se os registros são reais ou sintéticos.
-
-| Variável | Conteúdo | Papel no projeto |
+| Variável | Conteúdo | Utilização |
 | --- | --- | --- |
-| `cliente` | Identificador único | Rastrear os resultados; excluído do agrupamento |
+| `cliente` | Identificador do cliente | Rastrear os resultados; não entra no agrupamento |
 | `hortifruti` | Gasto em hortifruti | Formação dos grupos |
 | `carnes` | Gasto em carnes | Formação dos grupos |
 | `laticinios` | Gasto em laticínios | Formação dos grupos |
-| `canal` | `net`, `fone` | Descrever os grupos depois do ajuste |
-| `pedidos` | `10menos`, `11a20`, `21mais` | Descrever os grupos; são faixas, não contagens exatas |
-| `sexo` | `fem`, `masc` | Validado como coluna original; excluído da modelagem e das propostas |
+| `canal` | Internet (`net`) ou telefone (`fone`) | Descrever os grupos após o ajuste |
+| `pedidos` | `10menos`, `11a20` ou `21mais` | Descrever os grupos; são faixas de pedidos |
+| `sexo` | `fem` ou `masc` | Conferido na validação da base; não é utilizado nos modelos ou nas propostas |
 
-O código verifica colunas, valores ausentes, identificadores repetidos, domínios das categorias, gastos finitos e não negativos e gasto total positivo. Inconsistências geram erro explícito; não há exclusão ou imputação silenciosa. A execução registra o SHA-256 da planilha para identificar a versão exata utilizada.
+O código valida as colunas, as categorias, a unicidade dos clientes e a consistência dos gastos. Todos os registros são mantidos na análise principal. O gasto total calculado corresponde apenas à soma das três categorias disponíveis.
 
-O gasto total é a soma das três categorias disponíveis; não representa necessariamente toda a compra do cliente no supermercado.
+## Modelos e experimentos
 
-### Duas representações
+Os três modelos são aplicados a duas representações dos mesmos clientes:
 
-**Gastos absolutos:** são usados os três gastos, com padronização `z = (x − média) / desvio-padrão` pelo `StandardScaler`. O gasto total não é incluído como uma quarta dimensão redundante. Essa representação considera volume e composição das compras.
+- **Gastos absolutos:** os valores de hortifruti, carnes e laticínios são padronizados com `StandardScaler`. Essa representação considera volume e composição das compras.
+- **Participações:** cada gasto é dividido pela soma das três categorias do cliente. Essa representação enfatiza a distribuição do orçamento. Por exemplo, um cliente pode ter 70% em hortifruti, 17% em carnes e 13% em laticínios.
 
-**Participações:** cada gasto é dividido pelo gasto total das três categorias. As três parcelas somam 1, sem padronização adicional. Essa representação destaca a composição dos gastos e reduz a influência direta do valor total.
+| Modelo | Funcionamento e justificativa | Configurações testadas |
+| --- | --- | --- |
+| **K-Means** | Forma grupos em torno de centros e permite resumir os perfis pelas médias das variáveis. É a referência inicial pela facilidade de interpretação. | De 2 a 6 grupos, inicialização `k-means++`, 30 inicializações e semente 42 |
+| **Hierárquico aglomerativo** | Une progressivamente os grupos pelo critério Ward. Permite comparar outra estratégia de formação e visualizar as uniões em um dendrograma. | De 2 a 6 grupos, critério `ward` |
+| **DBSCAN** | Agrupa regiões densas e pode deixar clientes sem grupo, identificados pelo rótulo `-1`. Permite investigar perfis isolados. | `min_samples` de 3, 5 e 8; candidatos de `eps` definidos por distâncias de vizinhança |
 
-As participações são dependentes por construção. A distância euclidiana entre elas é uma escolha exploratória; o projeto não implementa análise composicional por log-razões. A média das participações individuais também não equivale à participação da categoria no gasto agregado de todos os clientes.
+Para o DBSCAN, os candidatos de `eps` usam os quantis 50%, 65%, 80%, 90% e 95% das distâncias ao vizinho correspondente a `min_samples`, incluindo o próprio cliente. Esses valores são multiplicados por 0,8, 1,0 e 1,2. No dataset fornecido, são avaliadas **110 configurações** no total.
 
-As duas representações respondem a perguntas diferentes. Não é correto escolher uma apenas porque sua silhueta é maior: a transformação muda a geometria das distâncias.
+Os gráficos de análise de componentes principais, ou PCA, servem apenas para visualização. Os modelos são ajustados nas três dimensões de cada representação.
 
-## Algoritmos implementados
+### Avaliação dos grupos
 
-### K-Means
-
-Agrupa os clientes em `k` segmentos e procura minimizar a soma das distâncias quadráticas de cada observação ao centro do seu grupo. O centro representa a média das variáveis dos clientes daquele segmento.
-
-- Implementação: `sklearn.cluster.KMeans`.
-- Parâmetros: `k = 2, 3, 4, 5, 6`, inicialização `k-means++`, `n_init = 30` e semente 42.
-- Motivo da inclusão: fornece uma referência simples e centros interpretáveis para descrever perfis de compra.
-- Limitações: exige escolher `k`, tende a favorecer grupos compactos e pode ser influenciado por valores extremos e pela representação dos dados.
-- Novos clientes: permite `predict`, desde que sejam usados os mesmos atributos e a transformação ajustada na amostra original.
-
-[Documentação oficial do K-Means](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html).
-
-### Agrupamento hierárquico aglomerativo
-
-Começa com um grupo para cada cliente e une grupos progressivamente. O critério **Ward** escolhe uniões que minimizam o aumento da variância interna e utiliza distância euclidiana. Um dendrograma mostra a sequência das uniões.
-
-- Implementação: `sklearn.cluster.AgglomerativeClustering`.
-- Parâmetros: `n_clusters = 2, 3, 4, 5, 6`, `linkage = "ward"`.
-- Motivo da inclusão: comparar os segmentos do K-Means com uma estratégia de formação diferente e visualizar a estrutura das uniões.
-- Limitações: as uniões não são desfeitas; escala, valores extremos e critério de união afetam o resultado.
-- Novos clientes: esta implementação não oferece `predict`; o modelo descreve os clientes usados no ajuste.
-
-O dendrograma é calculado com `scipy.cluster.hierarchy.linkage`, também com Ward, e apresentado de forma truncada para facilitar a leitura.
-
-[Documentação oficial do agrupamento aglomerativo](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html).
-
-### DBSCAN
-
-Forma grupos em regiões densas do espaço. `eps` define o raio da vizinhança e `min_samples` a quantidade mínima de observações nessa vizinhança, incluindo o próprio ponto, para um ponto central. O rótulo `-1` sinaliza ruído e não é interpretado como segmento comercial.
-
-- Implementação: `sklearn.cluster.DBSCAN`.
-- Parâmetros: `min_samples = 3, 5, 8`; distância euclidiana.
-- Para cada `min_samples`, calculam-se as distâncias ao vizinho dessa posição, incluindo o próprio cliente. Os quantis 50%, 65%, 80%, 90% e 95%, multiplicados por 0,8, 1,0 e 1,2, geram os candidatos de `eps`. Valores nulos e candidatos repetidos são descartados.
-- Motivo da inclusão: investigar agrupamentos por densidade e permitir que casos isolados fiquem sem segmento.
-- Limitações: sensibilidade a `eps`, `min_samples`, escala e diferenças de densidade. Um resultado com poucos clientes agrupados pode apresentar boa silhueta e baixa utilidade comercial.
-- Novos clientes: esta implementação não oferece `predict`.
-
-Configurações que geram somente um grupo, todos os clientes como ruído ou cobertura insuficiente são registradas e não são forçadas a produzir uma segmentação elegível.
-
-[Documentação oficial do DBSCAN](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html).
-
-### Por que KNN não foi usado como agrupador?
-
-O KNN de classificação atribui classes com base em exemplos rotulados. A base não contém segmentos previamente conhecidos. Busca por vizinhos pode apoiar uma ferramenta de clientes semelhantes, mas não substitui a descoberta dos segmentos proposta neste trabalho. Também não usamos classificadores para reproduzir os rótulos dos agrupamentos e apresentar essa concordância como validação independente.
-
-[Documentação oficial de vizinhos mais próximos](https://scikit-learn.org/stable/modules/neighbors.html).
-
-## Avaliação e seleção
-
-Não há uma classe correta conhecida para cada cliente. Portanto, **não são calculadas acurácia, precisão de classificação ou matriz de confusão**.
-
-| Indicador | Como interpretar |
+| Indicador | Interpretação |
 | --- | --- |
-| Silhueta | Entre −1 e 1; maior indica melhor separação segundo a distância adotada |
-| Davies–Bouldin | Menor sugere menor dispersão interna em relação à separação |
-| Calinski–Harabasz | Maior sugere maior dispersão entre grupos em relação à interna |
-| Cobertura | Fração dos clientes atribuídos a um grupo; exclui ruído |
-| Menor grupo | Ajuda a identificar segmentos pequenos demais para interpretação |
-| ARI de estabilidade | Concordância ajustada ao acaso entre partições; não é acurácia |
+| **Silhueta** | Mede a separação dos grupos; valores maiores, até 1, indicam melhor separação segundo a distância adotada. |
+| **Davies–Bouldin** | Compara dispersão interna e separação; valores menores são preferíveis. |
+| **Calinski–Harabasz** | Relaciona dispersão entre grupos e dentro deles; valores maiores são preferíveis. |
+| **Cobertura** | Fração dos clientes atribuídos a grupos. No DBSCAN, exclui os casos classificados como ruído. |
+| **ARI de estabilidade** | Mede concordância entre a divisão original e as divisões obtidas em subamostras, ajustada ao acaso. |
 
-Para o DBSCAN, as três métricas internas são calculadas **apenas entre os clientes agrupados**. A quantidade de ruído e a cobertura são reportadas separadamente. A silhueta tende a favorecer certas geometrias e não deve ser o único critério.
-
-Uma configuração é elegível se tiver ao menos dois grupos, pelo menos cinco clientes por grupo, cobertura mínima de 80% e silhueta definida. Os limites são escolhas deste projeto e podem ser alterados na célula de configuração; não são recomendações universais.
-
-Entre as configurações elegíveis de **cada algoritmo em cada representação**, seleciona-se o maior valor de:
+Uma configuração precisa apresentar pelo menos dois grupos, cinco clientes ou mais em cada grupo, cobertura mínima de 80% e silhueta definida. Entre as configurações elegíveis de cada algoritmo e representação, a seleção maximiza:
 
 ```text
 criterio_selecao = cobertura × silhueta − (1 − cobertura)
 ```
 
-Essa fórmula é uma **heurística explícita do projeto**, que atribui penalidade aos casos sem grupo. Não é uma métrica estabelecida da literatura nem uma estimativa de valor comercial. Os desempates consideram maior silhueta, menor Davies–Bouldin e menor número de grupos. As métricas originais continuam disponíveis.
+Essa expressão é uma heurística do projeto para penalizar clientes sem grupo. Os desempates usam maior silhueta, menor Davies–Bouldin e menor quantidade de grupos. Para o DBSCAN, as métricas internas excluem ruído e precisam ser interpretadas junto da cobertura.
 
-Não há seleção automática de um vencedor global. A busca e a avaliação interna usam a mesma amostra; os valores selecionados podem ser otimistas. A ausência de uma configuração elegível é um resultado permitido.
+A estabilidade é avaliada em **30 subamostras sem reposição**, com fração nominal de 80%, resultando em 64 clientes por repetição. Os parâmetros selecionados permanecem fixos e a padronização é reajustada em cada subamostra. São reportados ARI mediano, quartis, cobertura comum e fração de repetições elegíveis.
 
-### Estabilidade e sensibilidade
+O notebook também examina a retirada temporária de quatro casos sinalizados pela regra do intervalo interquartil e compara as partições entre representações. Os casos continuam presentes na análise principal.
 
-- **Estabilidade:** 30 subamostras de 80% sem reposição, com semente 42 e os mesmos índices para todos os métodos. Os parâmetros ficam fixos, mas o escalonamento é reajustado em cada subamostra. Para K-Means, as sementes também variam entre repetições.
-- **ARI de todos:** compara os rótulos originais e reajustados dos mesmos clientes; ruído pode contar como um rótulo e inflar concordância.
-- **ARI dos agrupados:** considera somente clientes que receberam grupo nas duas partições e exige pelo menos dois grupos em cada uma nesse conjunto comum. São exportados o número de comparações válidas e a cobertura comum.
-- **Repetições elegíveis:** informa em quantas subamostras os limites de tamanho e cobertura continuam atendidos. Isso complementa o ARI.
-- **Atípicos:** a regra de 1,5 IQR é aplicada às três categorias e ao gasto total. Todos os casos permanecem no ajuste principal. O ajuste sem os casos sinalizados é usado somente como controle de sensibilidade, sem nova busca de parâmetros.
-- **Representação:** o ARI também compara as partições do mesmo algoritmo em gastos absolutos e participações.
+## Principais resultados
 
-A estabilidade é condicional às configurações selecionadas e não equivale a validação com novos clientes. Intervalos interquartis do ARI são descrições das repetições, não intervalos de confiança populacionais.
+Os resultados registrados no notebook para a representação por participações foram:
 
-[Métricas e avaliação de agrupamento](https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation).
-
-## Resultados exportados
-
-Cada execução cria uma pasta nova em `resultados/`, para não misturar arquivos de execuções anteriores.
-
-| Arquivo em `tabelas/` | Conteúdo |
-| --- | --- |
-| `estatisticas_descritivas.csv` | Estatísticas dos gastos |
-| `distribuicoes_cadastrais.csv` | Contagens e percentuais de canal, pedidos e sexo |
-| `limites_iqr.csv` e `casos_atipicos_iqr.csv` | Diagnóstico de valores atípicos |
-| `todas_configuracoes.csv` | Busca completa, incluindo resultados inelegíveis |
-| `melhores_por_algoritmo.csv` | Configuração selecionada em cada combinação |
-| `comparacao_com_estabilidade.csv` | Métricas principais e estabilidade |
-| `estabilidade_repeticoes.csv` | Resultado de cada subamostra |
-| `sensibilidade_atipicos.csv` | Mudanças após retirar temporariamente os atípicos |
-| `concordancia_representacoes.csv` | Concordância entre as duas representações |
-| `perfis_segmentos.csv` | Tamanhos, médias, medianas e composição dos segmentos |
-| `canal_pedidos_por_segmento.csv` | Distribuições dessas características por grupo |
-| `clientes_segmentados.csv` | Dados e rótulos das configurações selecionadas |
-| `acoes_comerciais_propostas.csv` | Sugestões de campanhas ainda não testadas |
-
-As figuras incluem distribuições dos gastos, curvas de vizinhança, silhueta por quantidade de grupos, dendrogramas, projeções PCA e composição dos segmentos. **PCA é somente visualização**: os agrupamentos são ajustados nas três dimensões originais de cada representação.
-
-`configuracao.json` registra parâmetros, semente, tamanho da amostra, hash do dataset e versões. `requirements-execucao.txt` registra as dependências analíticas diretas utilizadas; `requirements.txt` define o ambiente de referência. A pasta `modelos/` contém modelos e transformações. Arquivos `.joblib` devem ser carregados somente de origem confiável e com bibliotecas compatíveis.
-
-## Resultados da execução incluída
-
-O notebook foi executado integralmente com os 81 clientes e as versões de `requirements.txt`. Foram avaliadas **110 configurações**. A validação também verificou entradas inválidas, partições degeneradas, ruído e integridade das exportações. Consulte a execução identificada em [resultados/README.md](resultados/README.md).
-
-Na representação por participações, as configurações selecionadas foram:
-
-| Algoritmo | Grupos | Cobertura | Silhueta | ARI mediano nas subamostras |
+| Modelo | Grupos | Cobertura | Silhueta | ARI mediano de estabilidade |
 | --- | ---: | ---: | ---: | ---: |
 | K-Means | 2 | 100,0% | 0,611 | 1,000 |
 | Hierárquico | 2 | 100,0% | 0,594 | 0,906 |
 | DBSCAN | 2 | 97,5% | 0,599 | 0,896 |
 
-No K-Means em participações, os 35 clientes do grupo 0 tiveram participação média de 38,81% em hortifruti, 34,20% em carnes e 26,99% em laticínios. Os 46 clientes do grupo 1 tiveram, respectivamente, 69,88%, 17,06% e 13,05%. São descrições desta amostra, sem identificação de hábitos futuros ou benefícios de campanha.
+No K-Means em participações, os perfis encontrados foram:
 
-O DBSCAN em gastos absolutos foi elegível no ajuste completo, mas somente **1 das 30 subamostras** continuou atendendo aos limites do protocolo. Essa fragilidade precisa ser discutida: selecionar uma configuração no conjunto completo não garante estabilidade. O ARI mediano 1,000 do K-Means também não significa acurácia de 100%: resume concordância nas subamostras sob este protocolo.
+| Característica | Grupo 0 | Grupo 1 |
+| --- | ---: | ---: |
+| Clientes | 35 | 46 |
+| Participação média de hortifruti | 38,81% | 69,88% |
+| Participação média de carnes | 34,20% | 17,06% |
+| Participação média de laticínios | 26,99% | 13,05% |
 
-## Como interpretar as propostas de campanha
+O grupo 0 distribui seus gastos de maneira mais equilibrada, enquanto o grupo 1 concentra uma parcela maior em hortifruti. Isso permite propor testes de comunicação de ofertas por categoria. As participações apresentadas são médias dos percentuais individuais dos clientes.
 
-O exemplo comercial pré-definido usa K-Means em participações e destaca, em cada grupo, a categoria com maior diferença positiva de participação média em relação à amostra. Essa escolha facilita a demonstração e **não declara K-Means vencedor**. A referência pode ser alterada em `REFERENCIA_COMERCIAL`.
+**ARI mediano de 1,000 indica elevada estabilidade sob o protocolo; não significa acurácia de 100% nem que todas as repetições foram idênticas.** Não existem rótulos corretos previamente conhecidos para validar os segmentos.
 
-Uma categoria com maior participação observada sugere um tema de comunicação a investigar. Não comprova preferência permanente ou resposta a desconto. Para avaliar uma campanha real, seria necessário um teste aleatório com grupo de comparação e medidas de conversão e margem incremental após os descontos.
+Nos gastos absolutos, o DBSCAN manteve os critérios de elegibilidade em apenas uma das 30 subamostras, mostrando sensibilidade às condições desse experimento. A seleção considera conjuntamente separação, cobertura, estabilidade e interpretação dos perfis.
 
-Os números dos segmentos são arbitrários. “Grupo 0” de um modelo não necessariamente corresponde ao “Grupo 0” de outro. Gastos em categorias também não autorizam inferências sobre dieta ou condições pessoais.
+## Arquivos gerados durante a execução
 
-## Limitações e uso no artigo
+O notebook cria uma pasta `resultados/execucao_<data_hora>/` e um ZIP correspondente **na sessão em que está sendo executado**. Essas saídas não precisam estar previamente no repositório.
 
-- A amostra tem apenas 81 clientes e origem amostral desconhecida; não demonstra representatividade do mercado.
-- Há somente três categorias agregadas e faixas de pedidos. Faltam produtos, datas, contagens exatas, preços, margens e histórico de campanhas.
-- Não há rótulos externos para validar se os segmentos correspondem a grupos reais e persistentes.
-- Transformações, parâmetros e observações extremas podem mudar a segmentação.
-- Métricas internas e estabilidade não comprovam retorno comercial nem causalidade.
-- As duas representações têm geometrias diferentes; índices não devem ser comparados isoladamente entre elas.
+As saídas incluem:
 
-Para o artigo IEEE, aproveite a pergunta de pesquisa, o dicionário de dados, as justificativas dos algoritmos, o protocolo documentado, `comparacao_com_estabilidade.csv`, os perfis e as figuras. Descreva os resultados efetivamente gerados e diferencie propostas de aplicação de benefícios medidos.
+- **Tabelas CSV:** estatísticas descritivas, todas as configurações testadas, comparação dos modelos, estabilidade, sensibilidade, perfis e propostas comerciais.
+- **Figuras PNG e PDF:** distribuições dos gastos, silhueta por quantidade de grupos, dendrogramas, projeções PCA e composição dos segmentos.
+- **Modelos ajustados:** arquivos `.joblib` com os modelos e as transformações utilizadas.
+- **Reprodutibilidade:** `configuracao.json`, versões das dependências, hash da planilha e `resumo_resultados.md`.
 
-## Artigo IEEE
+Para conferir os resultados principais após executar, procure `comparacao_com_estabilidade.csv`, `perfis_segmentos.csv`, `canal_pedidos_por_segmento.csv` e `acoes_comerciais_propostas.csv` na subpasta `tabelas/` gerada.
 
-O texto está em [artigo/artigo.tex](artigo/artigo.tex) e a versão compilada em [artigo/artigo.pdf](artigo/artigo.pdf). O artigo apresenta a pergunta de pesquisa, a justificativa dos três modelos, o dataset, as representações, os experimentos, as tabelas de resultados e estabilidade, as propostas comerciais e as limitações. Os dados numéricos correspondem à execução identificada em `resultados/README.md`.
+## Aplicação e limitações
 
-Para editar no Overleaf, importe o pacote `artigo_overleaf.zip` fornecido na entrega ou envie `artigo.tex` com a pasta `figuras_artigo/` e a classe `IEEEtran.cls`. Defina `artigo.tex` como documento principal. As referências estão no próprio `.tex`, sem arquivo BibTeX separado.
+O estudo oferece uma demonstração de segmentação para apoiar o planejamento de campanhas no supermercado. As propostas comerciais ainda precisam ser avaliadas em um teste com grupo de comparação e medidas de conversão e margem incremental.
 
-## Publicar no GitHub
+A amostra reduzida e de origem desconhecida, as três categorias agregadas e a ausência de histórico de campanhas limitam as conclusões. Não são medidos aumento de vendas, lucratividade, causalidade ou demanda futura. As participações somam 1 e são dependentes por construção; sua distância euclidiana é uma escolha exploratória. As métricas são internas, e a busca de configurações e a avaliação usam a mesma base.
 
-Envie o notebook, este README, `requirements.txt`, `.gitignore`, as pastas `dados/` e `artigo/` e os resultados que acompanham a entrega ao repositório [dev-abraao/IAmarcos](https://github.com/dev-abraao/IAmarcos). O notebook pode ser visualizado no GitHub e aberto pelo Colab. O código não publica arquivos automaticamente.
+## Referências técnicas
 
-O botão opcional do Colab pode ser incluído no README com o endereço abaixo. Ajuste `main` se o notebook estiver em outra branch:
-
-```markdown
-[![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dev-abraao/IAmarcos/blob/main/segmentacao_clientes.ipynb)
-```
+- [K-Means — scikit-learn](https://scikit-learn.org/1.6/modules/generated/sklearn.cluster.KMeans.html)
+- [Agrupamento hierárquico — scikit-learn](https://scikit-learn.org/1.6/modules/generated/sklearn.cluster.AgglomerativeClustering.html)
+- [DBSCAN — scikit-learn](https://scikit-learn.org/1.6/modules/generated/sklearn.cluster.DBSCAN.html)
+- [Avaliação de agrupamentos — scikit-learn](https://scikit-learn.org/1.6/modules/clustering.html#clustering-performance-evaluation)
+- [ARI — scikit-learn](https://scikit-learn.org/1.6/modules/generated/sklearn.metrics.adjusted_rand_score.html)
